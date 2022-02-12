@@ -1,0 +1,49 @@
+.active {
+  color: #fff;
+}
+
+.active-color {
+  color: #b57295 !important;
+}
+
+.nav-items {
+  font-size: large;
+  border-radius: 8px;
+  width: 100%;
+  background: #283140;
+}
+
+.nav-items a {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.nav-items a:hover {
+  text-decoration: none;
+}
+
+.nav-items:hover {
+  transition-duration: 0.8s;
+  opacity: 0.8;
+  background-color: #424b5a;
+}
+
+.nav-items:not(:last-child) {
+  margin-bottom: 1.5em;
+}
+
+.is-active {
+  background: #424b5a;
+}
+
+.course-container {
+  height: 120px;
+  background-color: #ff8172;
+  border-radius: 20px;
+}
+
+.courseCard:hover {
+  transition-duration: 0.5s;
+  opacity: 0.7;
+}
