@@ -14,6 +14,7 @@ import CourseEnroll from "./components/dashboard/CourseEnroll";
 import Course from "./components/Course";
 import ToggleTheme from "./components/ToggleTheme";
 import Navigation from "./components/Navigation";
+import FeedbackForm from "./components/dashboard/FeedbackForm";
 
 function App() {
   return (
@@ -49,6 +50,9 @@ function App() {
               </AuthRoute>
               <AuthRoute exact path="/survey" isPrivate={true} redirectTo={"/"}>
                 <Survey />
+              </AuthRoute>
+              <AuthRoute exact path="/feedbackform" isPrivate={true} redirectTo={"/"}>
+                <FeedbackForm />
               </AuthRoute>
               <AuthRoute
                 exact

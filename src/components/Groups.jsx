@@ -93,6 +93,7 @@ const Groups = () => {
       courseId: course_id,
       assignmentId: assignment_id,
       groupName: elements.GroupName.value,
+      // model name: kmeans/kmodes/smth
     };
     const err = await sendRequestAndGetPromise(`/api/create_group`, data);
     if (err) {

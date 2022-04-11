@@ -111,6 +111,13 @@ const Navigation = () => {
               </NavLink>
             </Flex>
             <Flex className="nav-items" bg={buttonBackground}>
+              <NavLink to="/feedbackform" activeClassName="is-active">
+                <Text fontSize="lg" color={buttonTextColor}>
+                  Feedback Form <WarningTwoIcon color="yellow.500" />
+                </Text>
+              </NavLink>
+            </Flex>
+            <Flex className="nav-items" bg={buttonBackground}>
               <NavLink to={location.pathname} onClick={openLogoutPopup}>
                 <Text fontSize="lg" color={buttonTextColor}>
                   Sign Out
