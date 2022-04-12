@@ -11,7 +11,7 @@ import {
   Button,
   Heading,
 } from "@chakra-ui/react";
-import { sendSurveyDetails } from "../../utils/dashboard";
+import { sendFeedbackDetails } from "../../utils/dashboard";
 import ErrorAlert from "../ErrorAlert";
 import SuccessAlert from "../SuccessAlert";
 
@@ -25,9 +25,10 @@ const FeedbackForm = () => {
   const handleUpdate = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    const error = await sendSurveyDetails({
+    const error = await sendFeedbackDetails({
       scores,
     });
+    console.log(scores);
     setIsLoading(false);
     if (error) {
       setError(error);

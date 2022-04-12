@@ -8,6 +8,12 @@ const FEEDBACKQUESTIONS = [
   "Member 2 participated actively in the group",
   "Member 3 participated actively in the group",
   "Member 4 participated actively in the group",
+  "Member 1 participated actively in the group",
+  "Member 2 participated actively in the group",
+  "Member 3 participated actively in the group",
+  "Member 4 participated actively in the group",
+  "Member 1 participated actively in the group",
+  "Member 2 participated actively in the group",
 ];
 
 export default FEEDBACKQUESTIONS;

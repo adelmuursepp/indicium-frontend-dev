@@ -186,6 +186,25 @@ const Groups = () => {
                           isDisabled={groupInfo.locked || !auth.student}
                           leftIcon={icon}
                         >
+                          {{auth.uid}}
+                        </Button>
+                      )}
+                      {inGroup ? (
+                        <Button
+                          onClick={(event) =>
+                            handleLeave(event, groupInfo.groupId)
+                          }
+                        >
+                          Leave Group
+                        </Button>
+                      ) : (
+                        <Button
+                          onClick={(event) =>
+                            handleJoin(event, groupInfo.groupId)
+                          }
+                          isDisabled={groupInfo.locked || !auth.student}
+                          leftIcon={icon}
+                        >
                           Join Group
                         </Button>
                       )}

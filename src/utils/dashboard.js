@@ -12,6 +12,10 @@ export const sendSurveyDetails = (data) => {
   return sendRequestAndGetPromise("/api/survey", data);
 };
 
+export const sendFeedbackDetails = (data) => {
+  return sendRequestAndGetPromise("/api/feedbackform", data);
+};
+
 export async function sendDeleteRequestAndGetPromise(url) {
   return fetch(url, {
     method: "DELETE",
