@@ -186,7 +186,6 @@ const Groups = () => {
                           isDisabled={groupInfo.locked || !auth.student}
                           leftIcon={icon}
                         >
-                          {{auth.uid}}
                         </Button>
                       )}
                       {inGroup ? (
