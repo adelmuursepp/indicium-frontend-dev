@@ -100,25 +100,24 @@ const FeedbackForm = () => {
         id={question}
         p={4}
         marginBottom={10}
-        // padding={10}
       >
         <FormLabel fontWeight="bold" as="legend">
           {question}
         </FormLabel>
 
         <Slider defaultValue={50} min={0} max={100} step={10} onChange={(val) => setSliderValue(val)}
+        width="93%"
+        marginLeft={5}
         >
           {[...Array(11)].map((_, i) => 
             <SliderMark value={i * 10} mt='1' ml='-2.5' fontSize='sm'
-              paddingTop={2}
             >
               {i * 10}
             </SliderMark>
-            // return i * ;
           )}
 
-        <SliderTrack bg='red.100'>
-          <Box position='relative' right={10} />
+        <SliderTrack bg='red.100' width="90%">
+          <Box position='relative' right={10} margin={4}/>
           <SliderFilledTrack bg='tomato' />
         </SliderTrack>
         <SliderThumb boxSize={4} />
@@ -142,7 +141,6 @@ const FeedbackForm = () => {
           <FormLabel fontWeight="bold" as="legend">
             {question}
           </FormLabel>
-          {/* <Text mb='8px'>Value: {value}</Text> */}
           <Input
             value={value}
             onChange={handleChange}

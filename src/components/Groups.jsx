@@ -143,7 +143,14 @@ const Groups = () => {
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const bg = useColorModeValue("orange.200", "gray.600");
     const icon = groupInfo.locked ? <LockIcon /> : <UnlockIcon />;
-    const inGroup = groupInfo.students.includes(auth.uid);
+    const objArray = groupInfo.students;
+    const studentAuthIds = objArray.map(person => person.uid);
+    const inGroup = studentAuthIds.includes(auth.uid);
+
+    // const inGroup = groupInfo.students.includes(auth.uid);
+    // console.log(inGroup);
+    // console.log(groupInfo.students);
+    // console.log(auth.uid);
 
     return (
       <AccordionItem>

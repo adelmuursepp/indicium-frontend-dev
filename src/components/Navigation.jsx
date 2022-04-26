@@ -27,13 +27,14 @@ const Navigation = () => {
   let auth = useAuth();
   let history = useHistory();
   let location = useLocation();
-
+  console.log("auth object: ", auth);
   useEffect(() => {
     setBusy(true);
     const fetchData = async () => {
       fetch("/api/user")
         .then((response) => response.json())
         .then((data) => {
+          console.log(data);
           setBusy(false);
           setDisplayName(data.name);
           setAvatarSrc(data.avatar);
