@@ -14,6 +14,14 @@ import {
 import { sendFeedbackDetails } from "../../utils/dashboard";
 import ErrorAlert from "../ErrorAlert";
 import SuccessAlert from "../SuccessAlert";
+import {
+  Slider,
+  SliderTrack,
+  SliderFilledTrack,
+  SliderThumb,
+  SliderMark,
+} from '@chakra-ui/react'
+import { Input } from '@chakra-ui/react'
 
 const FeedbackForm = () => {
   const formBackground = useColorModeValue("orange.100", "gray.700");
@@ -83,6 +91,70 @@ const FeedbackForm = () => {
     );
   };
 
+  const FeedbackQuestionSlider = ({ index, question }) => {
+    const [sliderValue, setSliderValue] = useState(50)
+    return (
+      <FormControl
+        as="fieldset"
+        background={formBackground}
+        id={question}
+        p={4}
+        marginBottom={10}
+        // padding={10}
+      >
+        <FormLabel fontWeight="bold" as="legend">
+          {question}
+        </FormLabel>
+
+        <Slider defaultValue={50} min={0} max={100} step={10} onChange={(val) => setSliderValue(val)}
+        >
+          {[...Array(11)].map((_, i) => 
+            <SliderMark value={i * 10} mt='1' ml='-2.5' fontSize='sm'
+              paddingTop={2}
+            >
+              {i * 10}
+            </SliderMark>
+            // return i * ;
+          )}
+
+        <SliderTrack bg='red.100'>
+          <Box position='relative' right={10} />
+          <SliderFilledTrack bg='tomato' />
+        </SliderTrack>
+        <SliderThumb boxSize={4} />
+      </Slider>        
+      </FormControl>
+    );
+  }
+
+    const FeedbackQuestionTextInput = ({ index, question }) => {
+      const [value, setValue] = React.useState('')
+      const handleChange = (event) => setValue(event.target.value)
+
+      return (
+        <FormControl
+          as="fieldset"
+          background={formBackground}
+          id={question}
+          p={4}
+          marginBottom={3}
+        >
+          <FormLabel fontWeight="bold" as="legend">
+            {question}
+          </FormLabel>
+          {/* <Text mb='8px'>Value: {value}</Text> */}
+          <Input
+            value={value}
+            onChange={handleChange}
+            placeholder='Here is a sample placeholder'
+            size='sm'
+            // border={"black"}
+            variant='filled'
+          />
+        </FormControl>
+      );
+  };
+
   return (
     <Box
       borderWidth={1}
@@ -98,8 +170,9 @@ const FeedbackForm = () => {
         </Heading>
         <form onSubmit={handleUpdate}>
           {FEEDBACKQUESTIONS.map((q, index) => (
-            <FeedbackQuestion key={index} index={index} question={q} />
+            index < 3 ? <FeedbackQuestion key={index} index={index} question={q} /> : index < 7 && index >= 3 ? <FeedbackQuestionTextInput key={index} index={index} question={q} /> : <FeedbackQuestionSlider key={index} index={index} question={q} />
           ))}
+
           <Button
             ml={3}
             colorScheme="blue"
