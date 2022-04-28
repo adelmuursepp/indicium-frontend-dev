@@ -37,7 +37,6 @@ const FeedbackForm = () => {
     const error = await sendFeedbackDetails({
       scores,
     });
-    console.log(scores);
     setIsLoading(false);
     if (error) {
       setError(error);
@@ -200,10 +199,6 @@ const FeedbackForm = () => {
           <Heading ml={3} mb={3} size={"md"} marginTop={9}>
             Last Comments
           </Heading>
-          <Text fontSize='lg' ml={3} mb={3} lineHeight={5} style={{fontSize: 17 }}>If you have any last comments, suggestions or feedback to give to the
-          instructors, please enter it below.
-          </Text>
-
           {COMMENTS.map((q, index) => (
             <FeedbackQuestionTextInput key={index} index={index} question={q} />
           ))}
