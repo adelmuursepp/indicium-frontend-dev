@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import FEEDBACKQUESTIONS from "./FeedbackQuestions";
+import {GROUPEVALUATIONQUESTIONS, MARKEVALUATIONQUESTIONS, COMMENTS} from "./FeedbackQuestions";
 import {
   Box,
   FormControl,
@@ -10,6 +10,7 @@ import {
   useColorModeValue,
   Button,
   Heading,
+  Text
 } from "@chakra-ui/react";
 import { sendFeedbackDetails } from "../../utils/dashboard";
 import ErrorAlert from "../ErrorAlert";
@@ -54,6 +55,7 @@ const FeedbackForm = () => {
         background={formBackground}
         id={question}
         p={4}
+        key={index}
       >
         <FormLabel fontWeight="bold" as="legend">
           {question}
@@ -100,6 +102,7 @@ const FeedbackForm = () => {
         id={question}
         p={4}
         marginBottom={10}
+        key={index}
       >
         <FormLabel fontWeight="bold" as="legend">
           {question}
@@ -110,7 +113,7 @@ const FeedbackForm = () => {
         marginLeft={5}
         >
           {[...Array(11)].map((_, i) => 
-            <SliderMark value={i * 10} mt='1' ml='-2.5' fontSize='sm'
+            <SliderMark value={i * 10} mt='1' ml='-2.5' fontSize='sm' key={i}
             >
               {i * 10}
             </SliderMark>
@@ -137,6 +140,7 @@ const FeedbackForm = () => {
           id={question}
           p={4}
           marginBottom={3}
+          key={index}
         >
           <FormLabel fontWeight="bold" as="legend">
             {question}
@@ -159,16 +163,49 @@ const FeedbackForm = () => {
       borderRadius={8}
       boxShadow="dark-lg"
       width="700px"
-      margin="auto"
+      margin="auto" 
       background={formBackground}
     >
       <Box my={4} textAlign="left">
         <Heading ml={3} mb={3} size={"lg"}>
           Feedback Form
         </Heading>
+        <Heading ml={3} mb={3} size={"md"} marginTop={9}>
+          Group Evaluation
+        </Heading>
+        <Text fontSize='lg' ml={3} mb={3} lineHeight={5} style={{fontSize: 17 }}>Please answer the following questions as honestly as possible
+        . Your responses to the following questions will not be considered in the marking scheme.
+        </Text>
+
         <form onSubmit={handleUpdate}>
-          {FEEDBACKQUESTIONS.map((q, index) => (
-            index < 3 ? <FeedbackQuestion key={index} index={index} question={q} /> : index < 7 && index >= 3 ? <FeedbackQuestionTextInput key={index} index={index} question={q} /> : <FeedbackQuestionSlider key={index} index={index} question={q} />
+          {GROUPEVALUATIONQUESTIONS.map((q, index) => (
+            <FeedbackQuestion key={index} index={index} question={q} />
+          ))}
+
+
+          <Heading ml={3} mb={3} size={"md"} marginTop={9}>
+            Mark Evaluation
+          </Heading>
+          <Text fontSize='lg' ml={3} mb={3} lineHeight={5} style={{fontSize: 17 }}>Please answer the following questions considering the overall contributions
+          you and your teamates made to the final deliverable(s). You can use the previous section's questions as
+          a guide when determining the level of contributions. Your response to the following questions will be
+          considered when assigning the final marks.
+          </Text>
+
+          {MARKEVALUATIONQUESTIONS.map((q, index) => (
+            <FeedbackQuestionSlider key={index} index={index} question={q} />
+          ))}
+
+
+          <Heading ml={3} mb={3} size={"md"} marginTop={9}>
+            Last Comments
+          </Heading>
+          <Text fontSize='lg' ml={3} mb={3} lineHeight={5} style={{fontSize: 17 }}>If you have any last comments, suggestions or feedback to give to the
+          instructors, please enter it below.
+          </Text>
+
+          {COMMENTS.map((q, index) => (
+            <FeedbackQuestionTextInput key={index} index={index} question={q} />
           ))}
 
           <Button
