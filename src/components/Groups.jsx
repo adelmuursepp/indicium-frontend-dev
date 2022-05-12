@@ -26,6 +26,8 @@ import { useAuth } from "../utils/auth";
 import ErrorAlert from "./ErrorAlert";
 import LoadingScreen from "./LoadingScreen";
 import AlertDialogComponent from "./dashboard/AlertDialogComponent";
+import { NavLink } from "react-router-dom";
+
 
 const Groups = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -48,6 +50,8 @@ const Groups = () => {
       groupId: groupId,
     };
     await sendRequestAndGetPromise(`/api/join_group`, data);
+    auth.userCourseId(course_id);
+    auth.userAssignmentId(assignment_id);
     setIsLoading(true);
     fetchGroupInfo();
   };
@@ -147,11 +151,6 @@ const Groups = () => {
     const studentAuthIds = objArray.map(person => person.uid);
     const inGroup = studentAuthIds.includes(auth.uid);
 
-    // const inGroup = groupInfo.students.includes(auth.uid);
-    // console.log(inGroup);
-    // console.log(groupInfo.students);
-    // console.log(auth.uid);
-
     return (
       <AccordionItem>
         {({ isExpanded }) => (
@@ -174,6 +173,28 @@ const Groups = () => {
                             <Avatar key={index} size="md" my={4} src={avatar} />
                           ))}
                         </Grid>
+                      )}
+                    </HStack>
+                    <HStack spacing="1vw">
+                      {/* <NavLink
+                        to={`/feedbackform/${groupInfo.groupId}`}
+                        activeClassName="is-active"
+                      >
+                        <Button>
+                          Submit Feedback Form
+                        </Button>
+                      </NavLink> */}
+                      {inGroup ? (
+                        <NavLink
+                          to={`/feedbackform/course/${course_id}/assignments/${assignment_id}`}
+                          activeClassName="is-active"
+                        >
+                          <Button>
+                            Submit Feedback Form
+                          </Button>
+                        </NavLink>
+                      ) : (
+                        null
                       )}
                     </HStack>
                     <HStack spacing="1vw">

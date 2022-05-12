@@ -51,7 +51,12 @@ function App() {
               <AuthRoute exact path="/survey" isPrivate={true} redirectTo={"/"}>
                 <Survey />
               </AuthRoute>
-              <AuthRoute exact path="/feedbackform" isPrivate={true} redirectTo={"/"}>
+              <AuthRoute
+                exact
+                path="/feedbackform/course/:course_id/assignments/:assignment_id"
+                isPrivate={true}
+                redirectTo={"/"}
+              >
                 <FeedbackForm />
               </AuthRoute>
               <AuthRoute

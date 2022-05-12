@@ -35,6 +35,11 @@ export const useProvideAuth = () => {
   const [email, setEmail] = useState("");
   const [student, setStudent] = useState(true);
   const [uid, setUid] = useState("");
+  const [groupMembers, setGroupMembers] = useState([]);
+  const [courseId, setCourseId] = useState("");
+  const [assignmentId, setAssignmentId] = useState("");
+  //   courseId: course_id,
+  // assignmentId: assignment_id,
 
   const checkAuthenticated = (cb) => {
     fetch("/api").then(async (response) => {
@@ -46,6 +51,7 @@ export const useProvideAuth = () => {
         setUid("");
       } else {
         const data = await response.json();
+        console.log("data: ", data);
         setLoggedIn(response.ok);
         setEmailVerified(data.email_verified);
         setEmail(data.email);
@@ -54,6 +60,18 @@ export const useProvideAuth = () => {
       }
       cb();
     });
+  };
+
+  const userGroupMembers = async (data) => {
+    setGroupMembers(data);
+  };
+
+  const userCourseId = async (data) => {
+    setCourseId(data);
+  };
+
+  const userAssignmentId = async (data) => {
+    setAssignmentId(data);
   };
 
   const loginUser = async (data, cb) => {
@@ -80,5 +98,8 @@ export const useProvideAuth = () => {
     loginUser,
     registerUser,
     logoutUser,
+    userGroupMembers,
+    userCourseId,
+    userAssignmentId,
   };
 };

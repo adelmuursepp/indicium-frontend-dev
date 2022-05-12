@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import {GROUPEVALUATIONQUESTIONS, MARKEVALUATIONQUESTIONS, COMMENTS} from "./FeedbackQuestions";
 import {
   Box,
@@ -23,6 +23,11 @@ import {
   SliderMark,
 } from '@chakra-ui/react'
 import { Input } from '@chakra-ui/react'
+import { useAuth } from "../../utils/auth";
+import { useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+
+
 
 const FeedbackForm = () => {
   const formBackground = useColorModeValue("orange.100", "gray.700");
@@ -30,6 +35,11 @@ const FeedbackForm = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  let { assignment_id, course_id } = useParams();
+  let auth = useAuth();
+  let history = useHistory();
+  const [groupMembers, setGroupMembers] = useState([]);
+
 
   const handleUpdate = async (event) => {
     event.preventDefault();
@@ -46,6 +56,53 @@ const FeedbackForm = () => {
       setSuccess("You have successfully submitted the form");
     }
   };
+
+  const fetchGroupInfo = useCallback(async () => {
+    const groupsResponse = await fetch(
+      `/api/courses/${course_id}/assignments/${assignment_id}/groups`
+    );
+    // if (!assignmentResponse.ok) history.push("/courses");
+    if (!groupsResponse.ok) history.push(`/course/${course_id}`);
+
+    const groups = await groupsResponse.json();
+
+    const info = {
+      groups: groups["groups"],
+    };
+    console.log("auth object[][]: ", auth.uid);
+    console.log("Groups1234:" ,info.groups);
+    const objArray = info.groups;
+    // const studentAuthIds = objArray.map(person => person.uid);
+    // const inGroup = studentAuthIds.includes(auth.uid);
+    // console.log(objArray);
+    const result = objArray.map(group => {
+      const studentAuthIds = group.students.map(person => person.uid);
+      console.log(studentAuthIds);
+      console.log("my uid:", auth.uid);
+      if(studentAuthIds.includes(auth.uid)) {
+        // console.log("INN!")
+        return group.students;
+      }else {
+        return null;
+      }
+    })
+    console.log(result);
+
+    result.forEach(element => {
+      console.log(element);
+      if (Array.isArray(element)) {
+        console.log("in");
+        setGroupMembers(element);
+      }
+    });
+    // setGroupMembers(info.groups);
+    console.log("State:", groupMembers);
+    setIsLoading(false);
+  }, [course_id, assignment_id, history]);
+
+  useEffect(() => {
+    fetchGroupInfo();
+  }, [fetchGroupInfo]);
 
   const FeedbackQuestion = ({ index, question }) => {
     return (
@@ -94,6 +151,7 @@ const FeedbackForm = () => {
 
   const FeedbackQuestionSlider = ({ index, question }) => {
     const [sliderValue, setSliderValue] = useState(50)
+    console.log("Inside slider state", groupMembers);
     return (
       <FormControl
         as="fieldset"
@@ -156,6 +214,8 @@ const FeedbackForm = () => {
       );
   };
 
+  
+
   return (
     <Box
       borderWidth={1}
@@ -191,9 +251,22 @@ const FeedbackForm = () => {
           considered when assigning the final marks.
           </Text>
 
-          {MARKEVALUATIONQUESTIONS.map((q, index) => (
-            <FeedbackQuestionSlider key={index} index={index} question={q} />
-          ))}
+          {MARKEVALUATIONQUESTIONS.map((q, index) => {
+            if(q.includes("[Group members]")) {
+              console.log("innn");
+              const result = groupMembers.map((member) => {
+                if (member.uid !== auth.uid) {
+                  const question = `How much time, effort and work did ${member.name} contribute?`;
+                  return (<FeedbackQuestionSlider key={index} index={index} question={question} />)
+                }
+              })
+              return result;
+            }else {
+              return (
+                <FeedbackQuestionSlider key={index} index={index} question={q} />
+              )
+            }
+          })}
 
 
           <Heading ml={3} mb={3} size={"md"} marginTop={9}>
